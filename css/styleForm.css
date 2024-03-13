@@ -1,0 +1,44 @@
+* {
+    box-sizing: border-box;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: green  url(/images/10081437.jpg) center top;
+    background-size: cover;
+    color: white;
+}
+
+
+#title {
+    font-size: 23px;
+    margin-top: 30px;
+    display: flex; 
+    /* Gebruiken van een flexbox of CSS grid */
+    text-transform: uppercase;
+    justify-content: center;
+}
+
+
+#formDiv {
+    text-align: center;
+    width: 300px;
+    margin: 50px auto;
+    padding: 0 20px 20px 20px;
+    
+}
+
+label {
+    display: block;
+    font-weight: 700;
+    margin: 10px;
+}
+
