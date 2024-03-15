@@ -21,6 +21,10 @@ form.addEventListener('submit', function (event) { //Event aan een element koppe
         .then(() => {                 //Consumer methods
             validerenForm(naamValue, emailValue)
                 .then((succesMessage) => {
+                    let formatNaam = naam.value.charAt(0).toUpperCase() + naam.value.slice(1);
+
+                    localStorage.setItem('spelerNaam', formatNaam); //Local storage gebruiken
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Gelukt!',
@@ -31,6 +35,18 @@ form.addEventListener('submit', function (event) { //Event aan een element koppe
                             window.location.href = 'spel.html';
                         }
                     });
+                })
+                .catch((errorMessage) => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oeps...',
+                        text: errorMessage
+                    });
+                });
+        })
+        .catch((error) => { //Arrow function
+            console.error('Script error:', error);
+        });
 });
 
 
@@ -45,6 +61,9 @@ function loadScript(src) {
 
         script.onload = () => resolve(script);
         script.onerror = () => reject(new Error('Script load error: ' + src));
+
+        document.head.append(script);
     })
 }
+
 

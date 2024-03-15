@@ -5,9 +5,11 @@ const emailBenodigdheden = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // u
 function validerenForm(naamValue, emailValue) { //Formulier valideren
     return new Promise((resolve, reject) => { ////Promise
         if (naamValue.trim() == "") {
+            reject("Naam is verplicht!");
         }
         if (emailValue == "" || !emailBenodigdheden.test(emailValue)) {
             reject("Email is verplicht en moet een geldig emailadres zijn!");
         }
+        resolve("Bedankt, we kunnen spelen!");
     });
 }
