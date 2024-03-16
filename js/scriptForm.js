@@ -11,6 +11,41 @@ let email = document.getElementById('email');
 let blackjack = document.getElementById('title');
 
 
+async function KaartenOphalen() { //Async & Await
+
+    let response = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1'); //Fetch om data op te halen
+    let data = await response.json(); //JSON manipuleren en weergeven (niet zeker of dit de juiste termen zijn)
+    let deckId = data.deck_id;
+    console.log(deckId);
+
+
+    let drawResponse = await fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`); //Gebruiken van template literals
+    let drawData = await drawResponse.json();
+
+    let linkerKaartImg = drawData.cards[0].image;
+    let linkerKaart = document.createElement('img');
+    linkerKaart.src = linkerKaartImg;
+    linkerKaart.classList.add('linker_Kaart');
+    document.body.appendChild(linkerKaart);
+
+    let drawResponse2 = await fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`);
+    let drawData2 = await drawResponse2.json();
+
+    let rechterKaartImg = drawData2.cards[0].image;
+    let rechterKaart = document.createElement('img');
+    rechterKaart.src = rechterKaartImg;
+    rechterKaart.classList.add('rechter_Kaart');
+    document.body.appendChild(rechterKaart);
+};
+
+(function kaartenTonen() {
+    setInterval(async () => {
+        await KaartenOphalen();
+    }, 2500);
+})(); // self executable function
+
+
+
 form.addEventListener('submit', function (event) { //Event aan een element koppelen
     event.preventDefault();
 
@@ -65,5 +100,4 @@ function loadScript(src) {
         document.head.append(script);
     })
 }
-
 

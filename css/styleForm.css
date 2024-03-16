@@ -28,6 +28,75 @@ body {
 }
 
 
+/* Basis CSS Animatie */
+
+.linker_Kaart {
+    position: fixed;
+    left: -100px; 
+    top: -100px;
+    transform: rotate(-45deg);
+    width: 300px;
+    opacity: 0; 
+    animation: slideFromTopLeft 1s forwards, rotateInLeft 1s forwards;
+}
+
+.rechter_Kaart {
+    position: fixed;
+    right: -100px; 
+    top: -100px;
+    transform: rotate(45deg);
+    width: 300px;
+    opacity: 0; 
+    animation: slideFromTopRight 1s forwards, rotateInRight 1s forwards;
+}
+
+
+
+@keyframes slideFromTopLeft { 
+    from {
+        left: -100px; 
+        top: -100px;
+        opacity: 0; 
+    }
+    to {
+        left: 10%; 
+        top: 10%;
+        opacity: 1; 
+    }
+}
+
+@keyframes slideFromTopRight {
+    from {
+        right: -100px; 
+        top: -100px;
+        opacity: 0; 
+    }
+    to {
+        right: 10%; 
+        top: 10%;
+        opacity: 1; 
+    }
+}
+
+@keyframes rotateInLeft {
+    from {
+        transform: rotate(-45deg);
+    }
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes rotateInRight {
+    from {
+        transform: rotate(45deg);
+    }
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+
 #formDiv {
     text-align: center;
     width: 300px;
@@ -41,4 +110,38 @@ label {
     font-weight: 700;
     margin: 10px;
 }
+
+#naam,
+#email,
+#submit {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 5px solid #437335;
+    border-radius: 10px;
+}
+
+#naam:focus,
+#email:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 50px rgba(147, 197, 250, 0.603);
+}
+
+#submit {
+    background-color: #437335;
+    color: white;
+    margin-top: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: border-color 0.3s ease;
+}
+
+#submit:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    box-shadow: 0 0 50px rgba(147, 197, 250, 0.603);
+}
+
 
