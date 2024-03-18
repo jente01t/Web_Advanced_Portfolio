@@ -58,5 +58,77 @@ function toonkaarten () {
     }
 }
 
+function waardeKaarten (kaarten) {
+    let waarde = 0;
+    let azen = 0;
+    for (let kaart of kaarten) {
+        if (kaart.value === 'ACE') {
+            waarde += 11;
+            azen += 1;
+        } else if (kaart.value === 'KING' || kaart.value === 'QUEEN' || kaart.value === 'JACK') {
+            waarde += 10;
+        } else {
+            waarde += parseInt(kaart.value);
+        };
+    };
 
-// css nog aanpassen en spel verder afmaken
+    while (waarde > 21 && azen > 0) {
+        waarde -= 10;
+        azen -= 1;
+    };
+    return waarde;
+};
+
+hitBtn.addEventListener('click', async function () {
+    spelerKaarten.push(await kaartenOphalen());
+    toonkaarten();
+    let spelerWaarde = waardeKaarten(spelerKaarten);
+    if (spelerWaarde > 21) {
+        checkWinnaar();
+    }
+});
+
+standBtn.addEventListener('click', async function () {
+    keuzeText.textContent = 'De dealer is aan de beurt';
+    dealerKaartenDiv.innerHTML = "";
+
+    let dealerWaarde = waardeKaarten(dealerKaarten);
+    while (dealerWaarde < 17) {
+        dealerKaarten.push(await kaartenOphalen());
+        dealerWaarde = waardeKaarten(dealerKaarten);
+    }
+    for (let kaart of dealerKaarten) {
+        let fotoKaart = document.createElement('img');
+        fotoKaart.src = kaart.image;
+        dealerKaartenDiv.appendChild(fotoKaart);
+    }
+    checkWinnaar();
+
+});
+
+function checkWinnaar () {
+    let spelerWaarde = waardeKaarten(spelerKaarten);
+    let dealerWaarde = waardeKaarten(dealerKaarten);
+
+
+    if (spelerWaarde > 21) {
+        keuzeText.textContent = 'Je hebt verloren';
+        eindeSpel();
+    }
+    else if (dealerWaarde > 21) {
+        keuzeText.textContent = 'Je hebt gewonnen!';
+        eindeSpel();
+    }
+    else if (spelerWaarde > dealerWaarde) {
+        keuzeText.textContent = 'Je hebt gewonnen!';
+        eindeSpel();
+    }
+    else if (spelerWaarde < dealerWaarde) {
+        keuzeText.textContent = 'Je hebt verloren';
+        eindeSpel();
+    }
+    else {
+        keuzeText.textContent = 'Gelijkspel';
+        eindeSpel();
+    }
+};
