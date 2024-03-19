@@ -1,3 +1,4 @@
+'use strict';
 
 
 let spelerNaam = document.getElementById('spelerNaam');
@@ -33,6 +34,7 @@ async function dealKaarten () {
     dealerKaarten.push(await kaartenOphalen());
 
     toonkaarten();
+    toonTotaleWaarde ();
 };
 
 dealKaarten();  
@@ -56,7 +58,9 @@ function toonkaarten () {
         fotoKaart.src = kaart.image;
         spelerKaartenDiv.appendChild(fotoKaart);
     }
+    toonTotaleWaarde ();
 }
+
 
 function waardeKaarten (kaarten) {
     let waarde = 0;
@@ -86,6 +90,7 @@ hitBtn.addEventListener('click', async function () {
     if (spelerWaarde > 21) {
         checkWinnaar();
     }
+    toonTotaleWaarde ();
 });
 
 standBtn.addEventListener('click', async function () {
@@ -102,9 +107,27 @@ standBtn.addEventListener('click', async function () {
         fotoKaart.src = kaart.image;
         dealerKaartenDiv.appendChild(fotoKaart);
     }
+    toonTotaleWaarde ();
     checkWinnaar();
 
 });
+
+
+function eindeSpel () {
+    hitBtn.style.display = 'none';
+    standBtn.style.display = 'none';
+    NieuwSpelBtn.style.display = 'block';
+};
+
+function toonTotaleWaarde () {
+    let spelerWaarde = waardeKaarten(spelerKaarten);
+    let dealerWaarde = waardeKaarten(dealerKaarten);
+
+    let spelerNaamWaarde = `${storedName} (Waarde: ${spelerWaarde})`;
+    let dealerNaamWaarde = `Dealer (Waarde: ${dealerWaarde})`;
+    spelerNaam.textContent = spelerNaamWaarde;
+    dealerNaam.textContent = dealerNaamWaarde;
+}
 
 function checkWinnaar () {
     let spelerWaarde = waardeKaarten(spelerKaarten);
@@ -132,3 +155,18 @@ function checkWinnaar () {
         eindeSpel();
     }
 };
+
+NieuwSpelBtn.addEventListener('click', function () {
+    dealerKaarten = [];
+    spelerKaarten = [];
+    dealKaarten();
+    keuzeText.textContent = 'Wat wil je doen?';
+    hitBtn.style.display = 'block';
+    standBtn.style.display = 'block';
+    NieuwSpelBtn.style.display = 'none';
+});
+
+
+// toevoegen hoeveel wins speler/dealer met winpercentage
+// mobiele versie mmaken
+// later toevoegen spelen met geld
