@@ -37,7 +37,7 @@ body {
     transform: rotate(-45deg);
     width: 300px;
     opacity: 0; 
-    animation: slideFromTopLeft 1s forwards, rotateInLeft 1s forwards;
+    animation: LeftAnimation 1s forwards;
 }
 
 .rechter_Kaart {
@@ -47,55 +47,40 @@ body {
     transform: rotate(45deg);
     width: 300px;
     opacity: 0; 
-    animation: slideFromTopRight 1s forwards, rotateInRight 1s forwards;
+    animation: RightAnimation 1s forwards;
 }
 
 
 
-@keyframes slideFromTopLeft { 
+@keyframes LeftAnimation { 
     from {
         left: -100px; 
         top: -100px;
         opacity: 0; 
+        transform: rotate(-45deg);
     }
     to {
         left: 10%; 
         top: 10%;
         opacity: 1; 
+        transform: rotate(0deg);
     }
 }
 
-@keyframes slideFromTopRight {
+@keyframes RightAnimation {
     from {
         right: -100px; 
         top: -100px;
         opacity: 0; 
+        transform: rotate(45deg);
     }
     to {
         right: 10%; 
         top: 10%;
         opacity: 1; 
-    }
-}
-
-@keyframes rotateInLeft {
-    from {
-        transform: rotate(-45deg);
-    }
-    to {
         transform: rotate(0deg);
     }
 }
-
-@keyframes rotateInRight {
-    from {
-        transform: rotate(45deg);
-    }
-    to {
-        transform: rotate(0deg);
-    }
-}
-
 
 #formDiv {
     text-align: center;
