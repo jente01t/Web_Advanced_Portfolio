@@ -20,13 +20,14 @@ spelerNaam.textContent = storedName; //element aanpassen
 let dealerKaarten = [];
 let spelerKaarten = [];
 
-
+// functie voor deck van kaarten op te halen
 async function kaartenOphalen() {
     let response = await fetch('https://deckofcardsapi.com/api/deck/new/draw/?count=1');
     let data = await response.json();
     return data.cards[0];
 };
 
+// functie voor kaarten uit te delen aan speler en dealer
 async function dealKaarten () {              
     spelerKaarten.push(await kaartenOphalen());
     dealerKaarten.push(await kaartenOphalen());
@@ -39,6 +40,8 @@ async function dealKaarten () {
 
 dealKaarten();  
 
+
+// functie om kaarten te tonen op het scherm
 function toonkaarten () {
     dealerKaartenDiv.innerHTML = "";
     spelerKaartenDiv.innerHTML = "";
@@ -62,6 +65,7 @@ function toonkaarten () {
 }
 
 
+// functie om de waarde van de kaarten te berekenen
 function waardeKaarten (kaarten) {
     let waarde = 0;
     let azen = 0;
@@ -83,6 +87,8 @@ function waardeKaarten (kaarten) {
     return waarde;
 };
 
+
+// eventlisteners voor hit, stand en nieuw spel
 hitBtn.addEventListener('click', async function () {
     spelerKaarten.push(await kaartenOphalen());
     toonkaarten();
@@ -113,12 +119,15 @@ standBtn.addEventListener('click', async function () {
 });
 
 
+// functie voor einde van het spel
 function eindeSpel () {
     hitBtn.style.display = 'none';
     standBtn.style.display = 'none';
     NieuwSpelBtn.style.display = 'block';
 };
 
+
+// functie om de totale waarde van de kaarten te tonen
 function toonTotaleWaarde () {
     let spelerWaarde = waardeKaarten(spelerKaarten);
     let dealerWaarde = waardeKaarten(dealerKaarten);
@@ -129,6 +138,8 @@ function toonTotaleWaarde () {
     dealerNaam.textContent = dealerNaamWaarde;
 }
 
+
+// functie om te controleren wie de winnaar is
 function checkWinnaar () {
     let spelerWaarde = waardeKaarten(spelerKaarten);
     let dealerWaarde = waardeKaarten(dealerKaarten);
@@ -156,6 +167,8 @@ function checkWinnaar () {
     }
 };
 
+
+// eventlistener voor nieuw spel
 NieuwSpelBtn.addEventListener('click', function () {
     dealerKaarten = [];
     spelerKaarten = [];

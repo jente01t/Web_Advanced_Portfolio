@@ -10,7 +10,7 @@ let email = document.getElementById('email');
 
 let blackjack = document.getElementById('title');
 
-
+// functie voor kaarten ophalen en deze te koppelen aan de DOM
 async function KaartenOphalen() { //Async & Await
 
     let response = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1'); //Fetch om data op te halen
@@ -38,6 +38,8 @@ async function KaartenOphalen() { //Async & Await
     document.body.appendChild(rechterKaart);
 };
 
+
+// functie om kaarten te tonen op het scherm
 (function kaartenTonen() {
     setInterval(async () => {
         await KaartenOphalen();
@@ -45,7 +47,7 @@ async function KaartenOphalen() { //Async & Await
 })(); // self executable function
 
 
-
+// eventlistener voor het formulier te valideren met SweetAlerts en naam op te slagen in local storage
 form.addEventListener('submit', function (event) { //Event aan een element koppelen
     event.preventDefault();
 
@@ -86,9 +88,7 @@ form.addEventListener('submit', function (event) { //Event aan een element koppe
 
 
 
-
-
-
+// functie om promise script te laden
 function loadScript(src) {
     return new Promise(function (resolve, reject) {
         let script = document.createElement('script');
