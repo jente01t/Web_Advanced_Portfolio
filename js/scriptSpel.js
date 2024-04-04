@@ -5,11 +5,24 @@ let spelerNaam = document.getElementById('spelerNaam');
 let dealerNaam = document.getElementById('dealerNaam');
 let dealerKaartenDiv = document.getElementById('dealerKaartenDiv');
 let spelerKaartenDiv = document.getElementById('spelerKaartenDiv');
+let dealerDiv = document.getElementById('dealerDiv');
+let spelerDiv = document.getElementById('spelerDiv');
 let hitBtn = document.getElementById('hit');
 let standBtn = document.getElementById('stand');
-let keuzeText = document.getElementById('keuzeText')
+let keuzeText = document.getElementById('keuzeText');
+let keuzes = document.getElementById('keuzes');
 let NieuwSpelBtn = document.getElementById('NieuwSpel');
 const achterKaart = "https://www.deckofcardsapi.com/static/img/back.png";
+let geldBetButton = document.getElementById('geldBetButton');
+let clearGeldButton = document.getElementById('clearGeldButton');
+let betHoeveelheid = document.getElementById('betHoeveelheid');
+let geldButtons = document.getElementById('geldButtons');
+let geld1 = document.getElementById('geld1');
+let geld5 = document.getElementById('geld5');
+let geld10 = document.getElementById('geld10');
+let geld25 = document.getElementById('geld25');
+let geld50 = document.getElementById('geld50');
+let geld100 = document.getElementById('geld100');
 
 
 let storedName = localStorage.getItem('spelerNaam'); //Local storage
@@ -19,6 +32,79 @@ spelerNaam.textContent = storedName; //element aanpassen
 
 let dealerKaarten = [];
 let spelerKaarten = [];
+let spelerGeld = 1000;
+let hoeveelheid = 0;
+
+keuzes.style.display = 'none';
+dealerDiv.style.display = 'none';
+spelerDiv.style.display = 'none';
+
+
+//functies voor de inzet van geld
+document.getElementById('geld1').addEventListener('click', function () {
+    hoeveelheid += 1;
+    betHoeveelheid.textContent = "Inzet: €" + hoeveelheid;
+});
+
+document.getElementById('geld5').addEventListener('click', function () {
+    hoeveelheid += 5;
+    betHoeveelheid.textContent = "Inzet: €" + hoeveelheid;
+});
+
+document.getElementById('geld10').addEventListener('click', function () {
+    hoeveelheid += 10;
+    betHoeveelheid.textContent = "Inzet: €" + hoeveelheid;
+});
+
+document.getElementById('geld25').addEventListener('click', function () {
+    hoeveelheid += 25;
+    betHoeveelheid.textContent = "Inzet: €" + hoeveelheid;
+});
+
+document.getElementById('geld50').addEventListener('click', function () {
+    hoeveelheid += 50;
+    betHoeveelheid.textContent = "Inzet: €" + hoeveelheid;
+});
+
+document.getElementById('geld100').addEventListener('click', function () {
+    hoeveelheid += 100;
+    betHoeveelheid.textContent = "Inzet: €" + hoeveelheid;
+});
+
+
+// eventlisteners voor de inzet van geld
+geldBetButton.addEventListener('click', function () {
+    if (hoeveelheid <= spelerGeld && hoeveelheid > 0) {
+        spelerGeld -= hoeveelheid;
+        document.getElementById('spelerGeld').textContent = "Geld: €" + spelerGeld;
+        dealKaarten();
+        geldBetButton.style.display = 'none';
+        clearGeldButton.style.display = 'none';
+        geld1.style.display = 'none';
+        geld5.style.display = 'none';
+        geld10.style.display = 'none';
+        geld25.style.display = 'none';
+        geld50.style.display = 'none';
+        geld100.style.display = 'none';
+        keuzes.style.display = 'flex';
+        dealerDiv.style.display = 'block';
+        spelerDiv.style.display = 'block';
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oeps...',
+            text: "Je hebt niet genoeg geld of je hebt een ongeldige inzet gedaan!"
+        });
+    }
+});
+
+
+// eventlistener voor het clearen van de inzet van geld
+clearGeldButton.addEventListener('click', function () {
+    hoeveelheid = 0;
+    betHoeveelheid.textContent = "Inzet: " + hoeveelheid;
+});
+
 
 // functie voor deck van kaarten op te halen
 async function kaartenOphalen() {
@@ -37,8 +123,6 @@ async function dealKaarten () {
     toonkaarten();
     toonTotaleWaarde ();
 };
-
-dealKaarten();  
 
 
 // functie om kaarten te tonen op het scherm
@@ -64,35 +148,42 @@ function toonkaarten () {
     toonTotaleWaarde ();
 }
 
-
 // functie om de waarde van de kaarten te berekenen
-function waardeKaarten (kaarten) {
+function waardeKaarten(kaarten, isDealer) {
     let waarde = 0;
     let azen = 0;
-    for (let kaart of kaarten) {
-        if (kaart.value === 'ACE') {
-            waarde += 11;
-            azen += 1;
-        } else if (kaart.value === 'KING' || kaart.value === 'QUEEN' || kaart.value === 'JACK') {
-            waarde += 10;
+
+    for (let i = 0; i < kaarten.length; i++) {
+        let kaart = kaarten[i];
+        if (kaart.value === "ACE") {
+            if (!(isDealer && i === 0)) {
+                waarde += 11;
+                azen += 1;
+            }
+        } else if (kaart.value === "KING" || kaart.value === "QUEEN" || kaart.value === "JACK") {
+            if (!(isDealer && i === 0)) {
+                waarde += 10;
+            }
         } else {
-            waarde += parseInt(kaart.value);
-        };
-    };
+            if (!(isDealer && i === 0)) {
+                waarde += parseInt(kaart.value);
+            }
+        }
+    }
 
     while (waarde > 21 && azen > 0) {
         waarde -= 10;
         azen -= 1;
-    };
+    }
     return waarde;
-};
+}
 
 
 // eventlisteners voor hit, stand en nieuw spel
 hitBtn.addEventListener('click', async function () {
     spelerKaarten.push(await kaartenOphalen());
     toonkaarten();
-    let spelerWaarde = waardeKaarten(spelerKaarten);
+    let spelerWaarde = waardeKaarten(spelerKaarten, false);
     if (spelerWaarde > 21) {
         checkWinnaar();
     }
@@ -103,10 +194,10 @@ standBtn.addEventListener('click', async function () {
     keuzeText.textContent = 'De dealer is aan de beurt';
     dealerKaartenDiv.innerHTML = "";
 
-    let dealerWaarde = waardeKaarten(dealerKaarten);
+    let dealerWaarde = waardeKaarten(dealerKaarten, true);
     while (dealerWaarde < 17) {
         dealerKaarten.push(await kaartenOphalen());
-        dealerWaarde = waardeKaarten(dealerKaarten);
+        dealerWaarde = waardeKaarten(dealerKaarten, true);
     }
     for (let kaart of dealerKaarten) {
         let fotoKaart = document.createElement('img');
@@ -115,7 +206,6 @@ standBtn.addEventListener('click', async function () {
     }
     toonTotaleWaarde ();
     checkWinnaar();
-
 });
 
 
@@ -129,8 +219,8 @@ function eindeSpel () {
 
 // functie om de totale waarde van de kaarten te tonen
 function toonTotaleWaarde () {
-    let spelerWaarde = waardeKaarten(spelerKaarten);
-    let dealerWaarde = waardeKaarten(dealerKaarten);
+    let spelerWaarde = waardeKaarten(spelerKaarten, false);
+    let dealerWaarde = waardeKaarten(dealerKaarten, true);
 
     let spelerNaamWaarde = `${storedName} (Waarde: ${spelerWaarde})`;
     let dealerNaamWaarde = `Dealer (Waarde: ${dealerWaarde})`;
@@ -141,8 +231,8 @@ function toonTotaleWaarde () {
 
 // functie om te controleren wie de winnaar is
 function checkWinnaar () {
-    let spelerWaarde = waardeKaarten(spelerKaarten);
-    let dealerWaarde = waardeKaarten(dealerKaarten);
+    let spelerWaarde = waardeKaarten(spelerKaarten, false);
+    let dealerWaarde = waardeKaarten(dealerKaarten, true);
 
 
     if (spelerWaarde > 21) {
@@ -151,10 +241,14 @@ function checkWinnaar () {
     }
     else if (dealerWaarde > 21) {
         keuzeText.textContent = 'Je hebt gewonnen!';
+        spelerGeld += hoeveelheid * 2;
+        document.getElementById('spelerGeld').textContent = "Geld: €" + spelerGeld;
         eindeSpel();
     }
     else if (spelerWaarde > dealerWaarde) {
         keuzeText.textContent = 'Je hebt gewonnen!';
+        spelerGeld += hoeveelheid * 2;
+        document.getElementById('spelerGeld').textContent = "Geld: €" + spelerGeld;
         eindeSpel();
     }
     else if (spelerWaarde < dealerWaarde) {
@@ -163,6 +257,8 @@ function checkWinnaar () {
     }
     else {
         keuzeText.textContent = 'Gelijkspel';
+        spelerGeld += hoeveelheid;
+        document.getElementById('spelerGeld').textContent = "Geld: €" + spelerGeld;
         eindeSpel();
     }
 };
@@ -172,14 +268,24 @@ function checkWinnaar () {
 NieuwSpelBtn.addEventListener('click', function () {
     dealerKaarten = [];
     spelerKaarten = [];
-    dealKaarten();
+    betHoeveelheid.textContent = "Inzet: " + hoeveelheid;
     keuzeText.textContent = 'Wat wil je doen?';
     hitBtn.style.display = 'block';
     standBtn.style.display = 'block';
     NieuwSpelBtn.style.display = 'none';
+    keuzes.style.display = 'none';
+    dealerDiv.style.display = 'none';
+    spelerDiv.style.display = 'none';
+    geldBetButton.style.display = 'inline-block';
+    clearGeldButton.style.display = 'inline-block';
+    geld1.style.display = 'inline-block';
+    geld5.style.display = 'inline-block';
+    geld10.style.display = 'inline-block';
+    geld25.style.display = 'inline-block';
+    geld50.style.display = 'inline-block';
+    geld100.style.display = 'inline-block';
 });
 
 
 // toevoegen hoeveel wins speler/dealer met winpercentage
 // mobiele versie mmaken
-// later toevoegen spelen met geld
