@@ -23,6 +23,8 @@ let geld10 = document.getElementById('geld10');
 let geld25 = document.getElementById('geld25');
 let geld50 = document.getElementById('geld50');
 let geld100 = document.getElementById('geld100');
+let statsButton = document.getElementById('statsButton');
+let statsBox = document.getElementById('statsBox');
 
 
 let storedName = localStorage.getItem('spelerNaam'); //Local storage
@@ -34,6 +36,12 @@ let dealerKaarten = [];
 let spelerKaarten = [];
 let spelerGeld = 1000;
 let hoeveelheid = 0;
+let spelerWins = 0;
+let spelerWinstPercentage = 0;
+let dealerWins = 0;
+let dealerWinstPercentage = 0;
+let aantalgames = 0;
+let balansStats = 0;
 
 keuzes.style.display = 'none';
 dealerDiv.style.display = 'none';
@@ -233,26 +241,39 @@ function toonTotaleWaarde () {
 function checkWinnaar () {
     let spelerWaarde = waardeKaarten(spelerKaarten, false);
     let dealerWaarde = waardeKaarten(dealerKaarten, true);
+    aantalgames += 1;
 
 
     if (spelerWaarde > 21) {
         keuzeText.textContent = 'Je hebt verloren';
+        dealerWins += 1;
+        updateStats();
+        opslaanStats();
         eindeSpel();
     }
     else if (dealerWaarde > 21) {
         keuzeText.textContent = 'Je hebt gewonnen!';
         spelerGeld += hoeveelheid * 2;
         document.getElementById('spelerGeld').textContent = "Geld: €" + spelerGeld;
+        spelerWins += 1;
+        updateStats();
+        opslaanStats();
         eindeSpel();
     }
     else if (spelerWaarde > dealerWaarde) {
         keuzeText.textContent = 'Je hebt gewonnen!';
         spelerGeld += hoeveelheid * 2;
         document.getElementById('spelerGeld').textContent = "Geld: €" + spelerGeld;
+        spelerWins += 1;
+        updateStats();
+        opslaanStats();
         eindeSpel();
     }
     else if (spelerWaarde < dealerWaarde) {
         keuzeText.textContent = 'Je hebt verloren';
+        dealerWins += 1;
+        updateStats();
+        opslaanStats();
         eindeSpel();
     }
     else {
@@ -262,6 +283,62 @@ function checkWinnaar () {
         eindeSpel();
     }
 };
+
+
+// functie om stats op te slaan
+function opslaanStats () {
+    localStorage.setItem('stats', JSON.stringify({
+        spelerWins: spelerWins,
+        spelerWinstPercentage: spelerWinstPercentage,
+        dealerWins: dealerWins,
+        dealerWinstPercentage: dealerWinstPercentage,
+        aantalgames: aantalgames,
+        balansStats: balansStats
+    }))
+}
+
+// functie om stats te updaten
+function updateStats () {
+    if (aantalgames > 0) {
+        spelerWinstPercentage = Math.round((spelerWins / aantalgames) * 100);
+        dealerWinstPercentage = Math.round((dealerWins / aantalgames) * 100);
+    }
+    balansStats = (spelerGeld - 1000).toFixed(2);
+}
+
+// functie om stats te laden
+function laadStats () {
+    let stats = localStorage.getItem('stats');
+    if (stats) {
+        stats = JSON.parse(stats);
+        spelerWins = stats.spelerWins;
+        spelerWinstPercentage = stats.spelerWinstPercentage;
+        dealerWins = stats.dealerWins;
+        dealerWinstPercentage = stats.dealerWinstPercentage;
+        aantalgames = stats.aantalgames;
+        balansStats = stats.balansStats;
+    }
+}
+
+
+// eventlistener voor statsBox te tonen
+statsButton.addEventListener('mouseenter', function () {
+    laadStats();
+    let statsText = `Speler wins:  ${spelerWins}<br>`
+    statsText += `Speler winpercentage:  ${spelerWinstPercentage}%<br>`
+    statsText += `Dealer wins:  ${dealerWins}<br>`
+    statsText += `Dealer winpercentage:  ${dealerWinstPercentage}%<br>`
+    statsText += `Aantal games:  ${aantalgames}<br>`
+    statsText += `Balans:  €${balansStats}<br>`
+    statsBox.innerHTML = statsText;
+    statsBox.style.display = 'block';
+});
+
+
+// eventlistener voor satsBox weg te halen 
+statsButton.addEventListener('mouseleave', function () {
+    statsBox.style.display = 'none';
+});
 
 
 // eventlistener voor nieuw spel
@@ -287,5 +364,4 @@ NieuwSpelBtn.addEventListener('click', function () {
 });
 
 
-// toevoegen hoeveel wins speler/dealer met winpercentage
 // mobiele versie mmaken
