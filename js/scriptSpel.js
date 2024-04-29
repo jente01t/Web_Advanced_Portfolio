@@ -110,7 +110,7 @@ geldBetButton.addEventListener('click', function () {
 // eventlistener voor het clearen van de inzet van geld
 clearGeldButton.addEventListener('click', function () {
     hoeveelheid = 0;
-    betHoeveelheid.textContent = "Inzet: " + hoeveelheid;
+    betHoeveelheid.textContent = "Inzet: €" + hoeveelheid;
 });
 
 
@@ -129,7 +129,8 @@ async function dealKaarten () {
     dealerKaarten.push(await kaartenOphalen());
 
     toonkaarten();
-    toonTotaleWaarde ();
+    toonTotaleWaardeSpeler ();
+    verwijderWaardenDealer ();
 };
 
 
@@ -153,7 +154,7 @@ function toonkaarten () {
         fotoKaart.src = kaart.image;
         spelerKaartenDiv.appendChild(fotoKaart);
     }
-    toonTotaleWaarde ();
+    toonTotaleWaardeSpeler ();
 }
 
 // functie om de waarde van de kaarten te berekenen
@@ -164,18 +165,12 @@ function waardeKaarten(kaarten, isDealer) {
     for (let i = 0; i < kaarten.length; i++) {
         let kaart = kaarten[i];
         if (kaart.value === "ACE") {
-            if (!(isDealer && i === 0)) {
                 waarde += 11;
                 azen += 1;
-            }
         } else if (kaart.value === "KING" || kaart.value === "QUEEN" || kaart.value === "JACK") {
-            if (!(isDealer && i === 0)) {
                 waarde += 10;
-            }
         } else {
-            if (!(isDealer && i === 0)) {
                 waarde += parseInt(kaart.value);
-            }
         }
     }
 
@@ -195,7 +190,7 @@ hitBtn.addEventListener('click', async function () {
     if (spelerWaarde > 21) {
         checkWinnaar();
     }
-    toonTotaleWaarde ();
+    toonTotaleWaardeSpeler ();
 });
 
 standBtn.addEventListener('click', async function () {
@@ -212,7 +207,8 @@ standBtn.addEventListener('click', async function () {
         fotoKaart.src = kaart.image;
         dealerKaartenDiv.appendChild(fotoKaart);
     }
-    toonTotaleWaarde ();
+    toonTotaleWaardeSpeler ();
+    toonTotaleWaardeDealer ();
     checkWinnaar();
 });
 
@@ -226,14 +222,25 @@ function eindeSpel () {
 
 
 // functie om de totale waarde van de kaarten te tonen
-function toonTotaleWaarde () {
+function toonTotaleWaardeSpeler () {
     let spelerWaarde = waardeKaarten(spelerKaarten, false);
-    let dealerWaarde = waardeKaarten(dealerKaarten, true);
+    
 
     let spelerNaamWaarde = `${storedName} (Waarde: ${spelerWaarde})`;
-    let dealerNaamWaarde = `Dealer (Waarde: ${dealerWaarde})`;
+    
     spelerNaam.textContent = spelerNaamWaarde;
+   
+}
+
+function toonTotaleWaardeDealer () {
+    let dealerWaarde = waardeKaarten(dealerKaarten, true);
+    let dealerNaamWaarde = `Dealer (Waarde: ${dealerWaarde})`;
     dealerNaam.textContent = dealerNaamWaarde;
+}
+
+function verwijderWaardenDealer () {
+    dealerNaam.textContent = "Dealer";
+
 }
 
 
