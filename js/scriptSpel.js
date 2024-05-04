@@ -123,15 +123,21 @@ async function kaartenOphalen() {
 
 // functie voor kaarten uit te delen aan speler en dealer
 async function dealKaarten () {              
-    spelerKaarten.push(await kaartenOphalen());
-    dealerKaarten.push(await kaartenOphalen());
-    spelerKaarten.push(await kaartenOphalen());
-    dealerKaarten.push(await kaartenOphalen());
+    const [kaart1, kaart2, ...overgeblevenKaarten] = await Promise.all([ //spread operator
+        kaartenOphalen(),
+        kaartenOphalen(),
+        kaartenOphalen(),
+        kaartenOphalen()
+    ]);
+
+    spelerKaarten.push(kaart1, kaart2);
+    dealerKaarten.push(...overgeblevenKaarten); //rest operator
 
     toonkaarten();
-    toonTotaleWaardeSpeler ();
-    verwijderWaardenDealer ();
-};
+    toonTotaleWaardeSpeler();
+    verwijderWaardenDealer();
+}
+
 
 
 // functie om kaarten te tonen op het scherm
@@ -139,7 +145,7 @@ function toonkaarten () {
     dealerKaartenDiv.innerHTML = "";
     spelerKaartenDiv.innerHTML = "";
 
-    for (let kaart of dealerKaarten) {
+    for (let kaart of dealerKaarten) { //Iteration over een array
         let fotoKaart = document.createElement('img');
         if (dealerKaarten.indexOf(kaart) == 0) {
             fotoKaart.src = achterKaart;
@@ -246,8 +252,7 @@ function verwijderWaardenDealer () {
 
 // functie om te controleren wie de winnaar is
 function checkWinnaar () {
-    let spelerWaarde = waardeKaarten(spelerKaarten, false);
-    let dealerWaarde = waardeKaarten(dealerKaarten, true);
+    let [spelerWaarde, dealerWaarde] = [waardeKaarten(spelerKaarten, false), waardeKaarten(dealerKaarten, true)]; // destructuring
     aantalgames += 1;
 
 
@@ -352,7 +357,7 @@ statsButton.addEventListener('mouseleave', function () {
 NieuwSpelBtn.addEventListener('click', function () {
     dealerKaarten = [];
     spelerKaarten = [];
-    betHoeveelheid.textContent = "Inzet: " + hoeveelheid;
+    betHoeveelheid.textContent = "Inzet: €" + hoeveelheid;
     keuzeText.textContent = 'Wat wil je doen?';
     hitBtn.style.display = 'block';
     standBtn.style.display = 'block';
