@@ -129,4 +129,130 @@ label {
     box-shadow: 0 0 50px rgba(147, 197, 250, 0.603);
 }
 
+@media only screen and (max-width: 1150px) {
+    .linker_Kaart,
+    .rechter_Kaart {
+        width: 210px;
+    }
+}
+
+
+@media only screen and (max-width: 768px) {
+    .linker_Kaart,
+    .rechter_Kaart {
+        width: 200px;
+
+    }
+
+    .rechter_Kaart {
+        position: absolute;
+        right: -100px;
+        bottom: -100px;
+        animation: rightAnimation 1s forwards;
+        top: auto;
+    }
+
+    .linker_Kaart {
+        position: absolute;
+        left: -100px;
+        bottom: -100px;
+        animation: leftAnimation 1s forwards;
+        top: auto;
+    }
+
+    @keyframes leftAnimation {
+        from {
+            left: -100px;
+            bottom: -100px;
+            opacity: 0;
+            transform: rotate(-45deg);
+        }
+        to {
+            left: 10%;
+            bottom: 10%;
+            opacity: 1;
+            transform: rotate(0deg);
+        }
+    }
+
+    @keyframes rightAnimation {
+        from {
+            right: -100px;
+            bottom: -100px;
+            opacity: 0;
+            transform: rotate(45deg);
+        }
+        to {
+            right: 10%;
+            bottom: 10%;
+            opacity: 1;
+            transform: rotate(0deg);
+        }
+    }
+}
+
+@media only screen and (max-width: 480px) {
+
+    #naam,
+    #email,
+    #submit {
+        width: 100%;
+    }
+
+    #formDiv {
+        padding: 0 10px;
+    }
+
+    .linker_Kaart,
+    .rechter_Kaart {
+        width: 150px;
+
+    }
+
+    .rechter_Kaart {
+        position: absolute;
+        right: -100px;
+        bottom: -100px;
+        animation: rightAnimation 1s forwards;
+        top: auto;
+    }
+
+    .linker_Kaart {
+        position: absolute;
+        left: -100px;
+        bottom: -100px;
+        animation: leftAnimation 1s forwards;
+        top: auto;
+    }
+
+    @keyframes leftAnimation {
+        from {
+            left: -100px;
+            bottom: -100px;
+            opacity: 0;
+            transform: rotate(-45deg);
+        }
+        to {
+            left: 10%;
+            bottom: 10%;
+            opacity: 1;
+            transform: rotate(0deg);
+        }
+    }
+
+    @keyframes rightAnimation {
+        from {
+            right: -100px;
+            bottom: -100px;
+            opacity: 0;
+            transform: rotate(45deg);
+        }
+        to {
+            right: 10%;
+            bottom: 10%;
+            opacity: 1;
+            transform: rotate(0deg);
+        }
+    }
+}
 
