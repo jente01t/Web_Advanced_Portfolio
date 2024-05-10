@@ -3,6 +3,8 @@
 Dit is een eenvoudig Blackjack spel voor mijn Web Advanced Portofolio, 
 hierbij heb ik gerbuik gemaakt van de Deck of Cards API en SweetAlerts.
 
+Zelf BlackJack spelen: https://jente01t.github.io/Web_Advanced_Portfolio/
+
 <br>
 
 ## Functies
