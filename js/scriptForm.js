@@ -62,6 +62,9 @@ form.addEventListener('submit', function (event) { //Event aan een element koppe
 
                     localStorage.setItem('spelerNaam', formatNaam); //Local storage gebruiken
 
+                    sessionStorage.setItem('spelerNaam', formatNaam);
+                    sessionStorage.setItem('spelerEmail', email.value);
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Gelukt!',
@@ -69,7 +72,7 @@ form.addEventListener('submit', function (event) { //Event aan een element koppe
                     }).then((result) => {
                         console.log('Swal prompt weergegeven');
                         if (result.isConfirmed) {
-                            window.location.href = 'spel.html';
+                            window.location.href = 'Spel.html';
                         }
                     });
                 })

@@ -13,7 +13,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background: green  url(/images/10081437.jpg) center top;
+    background: green  url(../images/10081437.jpg) center top;
     background-size: cover;
     color: white;
     max-height: 100vh;

@@ -15,7 +15,8 @@ hierbij heb ik gerbuik gemaakt van de Deck of Cards API en SweetAlerts.
 
 ## Bronnen
 
-![ChatGPT](https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white)  https://chat.openai.com/share/1141a58b-5941-454b-89ad-622f09c7c620
+![ChatGPT](https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white)  https://chat.openai.com/share/1141a58b-5941-454b-89ad-622f09c7c620 <br>
+https://chat.openai.com/share/b80d02f0-1299-48d7-b5ba-9091c3ec953a 
 
 
 Achtergrond by Freepik: https://www.freepik.com/free-vector/flat-design-poker-table-background_94956216.htm#query=poker%20background&position=0&from_view=keyword&track=ais&uuid=f50fd6f0-b13c-4a06-96d6-b432a3279e95 
