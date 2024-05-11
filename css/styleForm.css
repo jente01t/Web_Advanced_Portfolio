@@ -106,7 +106,16 @@ label {
     border-radius: 10px;
 }
 
+#leeftijd {
+    width: 30%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 5px solid #437335;
+    border-radius: 10px;
+}
+
 #naam:focus,
+#leeftijd:focus,
 #email:focus {
     outline: none;
     border-color: #007bff;
@@ -193,14 +202,26 @@ label {
 
 @media only screen and (max-width: 480px) {
 
+    h1 {
+        margin: 0px;
+    }
+
+    #title {
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
     #naam,
     #email,
+    #leeftijd,
     #submit {
-        width: 100%;
+        margin-bottom: 0px;
     }
+
 
     #formDiv {
         padding: 0 10px;
+        margin-top: 5px;
     }
 
     .linker_Kaart,

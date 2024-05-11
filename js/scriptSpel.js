@@ -101,7 +101,7 @@ geldBetButton.addEventListener('click', function () {
         Swal.fire({
             icon: 'error',
             title: 'Oeps...',
-            text: "Je hebt niet genoeg geld of je hebt een ongeldige inzet gedaan!"
+            text: "Je hebt niet genoeg geld of je hebt een ongeldige inzet!"
         });
     }
 });

@@ -7,6 +7,7 @@ let formDiv = document.getElementById('formDiv'); //Elementen selecteren
 let form = document.getElementById('form');
 let naam = document.getElementById('naam');
 let email = document.getElementById('email');
+let leeftijd = document.getElementById('leeftijd');
 
 let blackjack = document.getElementById('title');
 
@@ -60,10 +61,11 @@ form.addEventListener('submit', function (event) { //Event aan een element koppe
 
     let naamValue = naam.value;
     let emailValue = email.value;
+    let leeftijdValue = leeftijd.value;
 
     loadScript('js/validerenForm.js') //Callback function
         .then(() => {                 //Consumer methods
-            validerenForm(naamValue, emailValue)
+            validerenForm(naamValue, emailValue, leeftijdValue)
                 .then((succesMessage) => {
                     let formatNaam = naam.value.charAt(0).toUpperCase() + naam.value.slice(1);
 
@@ -71,6 +73,7 @@ form.addEventListener('submit', function (event) { //Event aan een element koppe
 
                     sessionStorage.setItem('spelerNaam', formatNaam);
                     sessionStorage.setItem('spelerEmail', email.value);
+                    sessionStorage.setItem('spelerLeeftijd', leeftijd.value);
 
                     Swal.fire({
                         icon: 'success',
