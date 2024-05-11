@@ -11,16 +11,22 @@ let email = document.getElementById('email');
 let blackjack = document.getElementById('title');
 
 // functie voor kaarten ophalen en deze te koppelen aan de DOM
+let deckId = null;
+
 async function KaartenOphalen() { //Async & Await
+    if (!deckId) {
+        let response = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1'); //Fetch om data op te halen
+        let data = await response.json();
+        deckId = data.deck_id;
+    }
 
-    let response = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1'); //Fetch om data op te halen
-    let data = await response.json(); //JSON manipuleren en weergeven (niet zeker of dit de juiste termen zijn)
-    let deckId = data.deck_id;
-    console.log(deckId);
-
-
-    let drawResponse = await fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`); //Gebruiken van template literals
+    let drawResponse = await fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`); //Gebruiken van template literals
     let drawData = await drawResponse.json();
+
+    if (drawData.cards.length < 2) {
+        deckId = null;
+        return KaartenOphalen(); 
+    }
 
     let linkerKaartImg = drawData.cards[0].image;
     let linkerKaart = document.createElement('img');
@@ -28,15 +34,16 @@ async function KaartenOphalen() { //Async & Await
     linkerKaart.classList.add('linker_Kaart');
     document.body.appendChild(linkerKaart);
 
-    let drawResponse2 = await fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`);
-    let drawData2 = await drawResponse2.json();
-
-    let rechterKaartImg = drawData2.cards[0].image;
+    let rechterKaartImg = drawData.cards[1].image;
     let rechterKaart = document.createElement('img');
     rechterKaart.src = rechterKaartImg;
     rechterKaart.classList.add('rechter_Kaart');
     document.body.appendChild(rechterKaart);
 };
+
+// Roep de functie aan om kaarten op te halen
+KaartenOphalen();
+
 
 
 // functie om kaarten te tonen op het scherm

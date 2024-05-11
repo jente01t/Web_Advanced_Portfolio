@@ -117,7 +117,7 @@ clearGeldButton.addEventListener('click', function () {
 // functie voor deck van kaarten op te halen
 async function kaartenOphalen() {
     let response = await fetch('https://deckofcardsapi.com/api/deck/new/draw/?count=1');
-    let data = await response.json();
+    let data = await response.json(); //JSON manipuleren en weergeven
     return data.cards[0];
 };
 
