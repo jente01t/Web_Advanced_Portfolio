@@ -23,6 +23,8 @@ let geld10 = document.getElementById('geld10');
 let geld25 = document.getElementById('geld25');
 let geld50 = document.getElementById('geld50');
 let geld100 = document.getElementById('geld100');
+let geld500 = document.getElementById('geld500');
+let allIn = document.getElementById('allIn');
 let statsButton = document.getElementById('statsButton');
 let statsBox = document.getElementById('statsBox');
 
@@ -49,33 +51,43 @@ spelerDiv.style.display = 'none';
 
 
 //functies voor de inzet van geld
-document.getElementById('geld1').addEventListener('click', function () {
+geld1.addEventListener('click', function () {
     hoeveelheid += 1;
     betHoeveelheid.textContent = "Inzet: €" + hoeveelheid;
 });
 
-document.getElementById('geld5').addEventListener('click', function () {
+geld5.addEventListener('click', function () {
     hoeveelheid += 5;
     betHoeveelheid.textContent = "Inzet: €" + hoeveelheid;
 });
 
-document.getElementById('geld10').addEventListener('click', function () {
+geld10.addEventListener('click', function () {
     hoeveelheid += 10;
     betHoeveelheid.textContent = "Inzet: €" + hoeveelheid;
 });
 
-document.getElementById('geld25').addEventListener('click', function () {
+geld25.addEventListener('click', function () {
     hoeveelheid += 25;
     betHoeveelheid.textContent = "Inzet: €" + hoeveelheid;
 });
 
-document.getElementById('geld50').addEventListener('click', function () {
+geld50.addEventListener('click', function () {
     hoeveelheid += 50;
     betHoeveelheid.textContent = "Inzet: €" + hoeveelheid;
 });
 
-document.getElementById('geld100').addEventListener('click', function () {
+geld100.addEventListener('click', function () {
     hoeveelheid += 100;
+    betHoeveelheid.textContent = "Inzet: €" + hoeveelheid;
+});
+
+geld500.addEventListener('click', function () {
+    hoeveelheid += 500;
+    betHoeveelheid.textContent = "Inzet: €" + hoeveelheid;
+});
+
+allIn.addEventListener('click', function () {
+    hoeveelheid = spelerGeld;
     betHoeveelheid.textContent = "Inzet: €" + hoeveelheid;
 });
 
