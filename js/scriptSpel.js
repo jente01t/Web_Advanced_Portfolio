@@ -106,6 +106,8 @@ geldBetButton.addEventListener('click', function () {
         geld25.style.display = 'none';
         geld50.style.display = 'none';
         geld100.style.display = 'none';
+        geld500.style.display = 'none';
+        allIn.style.display = 'none';
         keuzes.style.display = 'flex';
         dealerDiv.style.display = 'block';
         spelerDiv.style.display = 'block';
@@ -385,6 +387,8 @@ NieuwSpelBtn.addEventListener('click', function () {
     geld25.style.display = 'inline-block';
     geld50.style.display = 'inline-block';
     geld100.style.display = 'inline-block';
+    geld500.style.display = 'inline-block';
+    allIn.style.display = 'inline-block';
 });
 
 
