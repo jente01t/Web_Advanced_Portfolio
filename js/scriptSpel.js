@@ -1,6 +1,6 @@
 'use strict';
 
-
+// Elementen selecteren
 let spelerNaam = document.getElementById('spelerNaam');
 let dealerNaam = document.getElementById('dealerNaam');
 let dealerKaartenDiv = document.getElementById('dealerKaartenDiv');
@@ -33,7 +33,7 @@ let storedName = localStorage.getItem('spelerNaam'); //Local storage
 
 spelerNaam.textContent = storedName; //Elementen manipuleren
 
-
+// zet beginstatus
 let dealerKaarten = [];
 let spelerKaarten = [];
 let spelerGeld = 1000;
@@ -202,7 +202,7 @@ function waardeKaarten(kaarten, isDealer) {
 }
 
 
-// eventlisteners voor hit, stand en nieuw spel
+// eventlisteners voor hit en checken van winnaar
 hitBtn.addEventListener('click', async function () {
     spelerKaarten.push(await kaartenOphalen());
     toonkaarten();
@@ -213,6 +213,7 @@ hitBtn.addEventListener('click', async function () {
     toonTotaleWaardeSpeler ();
 });
 
+// eventlistener voor stand en checken van winnaar
 standBtn.addEventListener('click', async function () {
     keuzeText.textContent = 'De dealer is aan de beurt';
     dealerKaartenDiv.innerHTML = "";
@@ -252,12 +253,14 @@ function toonTotaleWaardeSpeler () {
    
 }
 
+// functie om de totale waarde van de dealer te tonen
 function toonTotaleWaardeDealer () {
     let dealerWaarde = waardeKaarten(dealerKaarten, true);
     let dealerNaamWaarde = `Dealer (Waarde: ${dealerWaarde})`;
     dealerNaam.textContent = dealerNaamWaarde;
 }
 
+// functie om de waarde van de dealer te verwijderen
 function verwijderWaardenDealer () {
     dealerNaam.textContent = "Dealer";
 
@@ -390,6 +393,3 @@ NieuwSpelBtn.addEventListener('click', function () {
     geld500.style.display = 'inline-block';
     allIn.style.display = 'inline-block';
 });
-
-
-// mobiele versie mmaken

@@ -2,6 +2,7 @@
 //Gebruiken van een constante
 const emailBenodigdheden = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // uit werkcollege 2 oplossingen
 
+//functie voor het valideren van het formulier
 function validerenForm(naamValue, emailValue, leeftijdValue) { //Formulier valideren
     return new Promise((resolve, reject) => { //Promise
         if (naamValue.trim() == "") {

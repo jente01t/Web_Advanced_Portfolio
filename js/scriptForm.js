@@ -63,6 +63,7 @@ form.addEventListener('submit', function (event) { //Event aan een element koppe
     let emailValue = email.value;
     let leeftijdValue = leeftijd.value;
 
+    // aanroepen functie voor het valideren van het formulier
     loadScript('js/validerenForm.js') //Callback function
         .then(() => {                 //Consumer methods
             validerenForm(naamValue, emailValue, leeftijdValue)
