@@ -30,8 +30,8 @@ let statsBox = document.getElementById('statsBox');
 
 
 let storedName = localStorage.getItem('spelerNaam'); //Local storage
-console.log(storedName);
-spelerNaam.textContent = storedName; //element aanpassen
+
+spelerNaam.textContent = storedName; //Elementen manipuleren
 
 
 let dealerKaarten = [];
