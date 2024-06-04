@@ -1,8 +1,5 @@
 'use strict';
 
-console.log('script loaded');
-
-
 let formDiv = document.getElementById('formDiv'); //Elementen selecteren
 let form = document.getElementById('form');
 let naam = document.getElementById('naam');
@@ -81,7 +78,6 @@ form.addEventListener('submit', function (event) { //Event aan een element koppe
                         title: 'Gelukt!',
                         text: succesMessage
                     }).then((result) => {
-                        console.log('Swal prompt weergegeven');
                         if (result.isConfirmed) {
                             window.location.href = 'Spel.html';
                         }

@@ -113,9 +113,9 @@ geldBetButton.addEventListener('click', function () {
         spelerDiv.style.display = 'block';
     } else {
         Swal.fire({
-            icon: 'error',
+            icon: 'warning',
             title: 'Oeps...',
-            text: "Je hebt niet genoeg geld of je hebt een ongeldige inzet!"
+            text: "Je hebt niet genoeg geld of je hebt geen inzet gedaan"
         });
     }
 });
@@ -392,4 +392,14 @@ NieuwSpelBtn.addEventListener('click', function () {
     geld100.style.display = 'inline-block';
     geld500.style.display = 'inline-block';
     allIn.style.display = 'inline-block';
+    if (spelerGeld <= 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Geen geld meer!',
+            text: "Je hebt geen geld meer, je krijgt van mij €1000 om verder te spelen"
+        });
+        spelerGeld = 1000;
+        localStorage.setItem('spelerGeld', spelerGeld);
+        document.getElementById('spelerGeld').textContent = "Geld: €" + spelerGeld;
+    }
 });
